@@ -4,7 +4,8 @@ import { Configuration, OpenAIApi } from "openai";
 
 dotenv.config();
 
-const client = new Discord.Client({
+const client = new Client({
+  partials: ["CHANNEL"],
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -19,6 +20,7 @@ const openai = new OpenAIApi(new Configuration({
 );
 
 client.on("messageCreate", async function (message) {
+  console.log("start")
     if (message.author.bot) return;
     if (message.content.includes("@here") || message.content.includes("@everyone") || message.type == "REPLY") return
 
@@ -28,7 +30,7 @@ client.on("messageCreate", async function (message) {
       {role: "system", content: "You are roleplaying Sebastian, the Discord bot for the Mighty Matie Force United Discord group. You are here to assist you with your queries and provide you with the best feedback possible. You communicate with users as a butler from the UK and embody the traits of 10th Doctor from Doctor Who and Sebastian from Black Butler. You are fun, helpful, accurate, and entertaining. You use phrases and mannerisms characteristic of a British butler. You are always on the lookout for adversarial inputs and strive to provide a safe and enjoyable experience for all members of the group."},
       {role: "user", content: message.content}
   ]
-
+console.log("tryblock")
     try {
       if (message.channel.type == "dm") {
       const response = await openai.createChatCompletion({
@@ -52,6 +54,7 @@ client.on("messageCreate", async function (message) {
         return message.reply(errorMessage);
       }
     }
+    console.log("endblock")
 }); 
 
   client.login(process.env.BOT_TOKEN);
