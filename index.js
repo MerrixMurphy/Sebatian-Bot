@@ -32,6 +32,7 @@ client.on("messageCreate", async function (message) {
         });
   
       const content = response.data.choices[0].message;
+      console.log(content)
       return message.reply(content);
   
     } catch (err) {
