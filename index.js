@@ -18,9 +18,11 @@ const openai = new OpenAIApi(new Configuration({
 );
 
 client.on("messageCreate", async function (message) {
+  console.log("check1")
     if (message.author.bot) return;
+    console.log("check2")
     if (message.content.includes("@here") || message.content.includes("@everyone") || message.type == "REPLY") return
-
+console.log("check3")
     if (message.mentions.has(client.user.id) || message.channel.type == "dm") {
     try {
       const response = await openai.createChatCompletion({
