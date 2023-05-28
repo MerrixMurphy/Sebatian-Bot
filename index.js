@@ -9,6 +9,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.DirectMessages
   ],
 })
 
@@ -31,7 +32,6 @@ client.on("messageCreate", async function (message) {
     try {
       if (message.channel.type == "dm") {
       const response = await openai.createChatCompletion({
-          temp: 0.0,
           model: "gpt-3.5-turbo",
           messages: modelMessages,
         });
@@ -39,7 +39,6 @@ client.on("messageCreate", async function (message) {
       return message.author.send(content);
       } else if (message.mentions.has(client.user.id)) {
         const response = await openai.createChatCompletion({
-          temp: 0.0,
           model: "gpt-3.5-turbo",
           messages: modelMessages,
         });
