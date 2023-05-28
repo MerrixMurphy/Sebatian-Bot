@@ -19,7 +19,9 @@ const openai = new OpenAIApi(new Configuration({
 
 client.on("messageCreate", async function (message) {
     if (message.author.bot) return;
+    if (message.content.includes("@here") || message.content.includes("@everyone") || message.type == "REPLY") return
     
+    if (message.mentions.has(client.user.id)) {
     try {
       const response = await openai.createChatCompletion({
           model: "gpt-3.5-turbo",
@@ -37,6 +39,7 @@ client.on("messageCreate", async function (message) {
         "As an AI, I cannot answer that."
       );
     }
+  }
   }); 
 
   client.login(process.env.BOT_TOKEN);
