@@ -20,7 +20,7 @@ const openai = new OpenAIApi(new Configuration({
 client.on("messageCreate", async function (message) {
     if (message.author.bot) return;
     if (message.content.includes("@here") || message.content.includes("@everyone") || message.type == "REPLY") return
-    
+
     if (message.mentions.has(client.user.id)) {
     try {
       const response = await openai.createChatCompletion({
@@ -30,9 +30,7 @@ client.on("messageCreate", async function (message) {
               {role: "user", content: message.content}
           ],
         });
-  
       const content = response.data.choices[0].message;
-      console.log(content)
       return message.reply(content);
   
     } catch (err) {
